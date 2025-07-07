@@ -1,0 +1,96 @@
+<style>
+  .btn-search{
+    background-color: #fe424d;
+    color: #fff;
+    border-radius: 25px;
+    padding: 0 1rem 0 1rem;
+  }
+  .btn-search:hover {
+    background-color: #fe424d;
+    color: #fff;
+
+  }
+  .btn-search i{
+    display: inline;
+    margin-right: 0.5rem;
+  }
+  .search-inp{
+    border-radius: 25px;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+  }
+  #suggestionsBox:empty {
+  display: none;
+}
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+      <% if (typeof showSearch === 'undefined' || showSearch) { %>
+      <div class="navbar-nav ms-auto position-relative">
+        <form class="d-flex" role="search" action="/search" method="get">                            
+            <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations" name="location" id="locationInput" aria-label="Search" autocomplete="off" value="<%= searchLocation %>"/>
+            <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+            <!-- <div id="suggestionsBox" class="position-absolute w-100 shadow-lg rounded-4 mt-2 py-2"></div> -->
+            <div id="suggestionsBox" class="position-absolute w-100 bg-white shadow-lg rounded-4 py-2" style="top: 100%; margin-top: 6px; z-index: 1000; width: 50vw;"></div>
+
+        </form>
+      </div>
+      <% } %>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">List your place</a>
+        <% if(!currUser) { %>
+        <a class="nav-link" href="/signup"><b>Sign up</b></a>
+        <a class="nav-link" href="/login"><b>Log in</b></a>
+        <% } %>
+        <% if(currUser) { %>
+        <a class="nav-link" href="/logout"><b>Log out</b></a>
+         <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<script>
+  const input = document.getElementById('locationInput');
+  const suggestionsBox = document.getElementById('suggestionsBox');
+
+  input.addEventListener('input', async () => {
+    const query = input.value.trim();
+    if (!query) {
+      suggestionsBox.innerHTML = '';
+      return;
+    }
+
+    const res = await fetch(`/search/location?q=${query}`);
+    const locations = await res.json();
+    suggestionsBox.innerHTML = '';
+
+    locations.forEach(({ location, country }) => {
+      const item = document.createElement('div');
+      item.className = 'suggestion-item';
+
+      item.innerHTML = `
+        <span class="icon"><i class="fa-solid fa-location-dot"></i></span>
+        <div>
+          <div class="text-main">${location}</div>
+          <div class="text-sub">${country}</div>
+        </div>
+      `;
+
+      item.addEventListener('click', () => {
+        window.location.href = `/search?location=${encodeURIComponent(location)}`;
+      });
+
+      suggestionsBox.appendChild(item);
+    });
+  });
+</script>

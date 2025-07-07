@@ -1,0 +1,113 @@
+<% layout("/layouts/boilerplate") %>
+
+<% layout("/layouts/boilerplate") %>
+
+<div class="signup-wrapper">
+  <div class="signup-card">
+    <form action="/signup" method="POST" novalidate>
+      <h1 class="signup-title">Signup on WanderLust</h1>
+
+      <div class="mb-3">
+        <label for="username" class="form-label text-white">Username</label>
+        <input type="text" name="username" id="username" class="form-control input-dark" placeholder="Enter your username" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label text-white">Email</label>
+        <input type="email" name="email" id="email" class="form-control input-dark" placeholder="Enter your email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label text-white">Password</label>
+        <input type="password" name="password" id="password" class="form-control input-dark" placeholder="Enter your password" required>
+      </div>
+
+      <button class="btn btn-danger w-100">Signup</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+    overflow: hidden; /* Prevent scroll */
+  }
+
+  .signup-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signup-card {
+    background-color: #2d2544;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .signup-title {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .input-dark {
+    background-color: #1b1628;
+    color: white !important;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+
+  .input-dark::placeholder {
+    color: #ccc;
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .btn-danger {
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+  }
+
+  @media (max-width: 576px) {
+    .signup-card {
+      padding: 1.5rem;
+    }
+
+    .signup-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+<!-- <div class="row mt-3">
+    <h1 class="col-6 offset-3">Signup on WanderLust</h1>
+    <div class="col-6 offset-3">
+        <form action="/signup" method="post" class="needs-validation" novalidate>
+            <div class="mb-2">
+                <label for="username" class="form-label">Username</label>
+                <input name="username" id="username" type="text" class="form-control" required>
+                <div class="valid-feedback">Looks good</div>
+            </div>
+            <div class="mb-2">
+                <label for="email" class="form-label">Email</label>
+                <input name="email" id="email" type="text" class="form-control" required>
+            </div>
+            <div class="mb-2">
+                <label for="password" class="form-label">Password</label>
+                <input name="password" id="password" type="password" class="form-control" required>
+            </div>
+            <button class="btn btn-success">Signup</button>
+
+        </form>
+    </div>
+</div> -->
